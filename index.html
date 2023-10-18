@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .content {
+      height: 0;
+      overflow: hidden;
+      transition: height 0.3s;
+    }
+  </style>
+</head>
+<body>
+  <button class="button">Toggle Content 1</button>
+  <div class="content">
+    <p>This is a content.</p>
+    <button class="button">Toggle Content 2</button>
+    <div class="content">
+      <p>This is another content.</p>
+    </div>
+  </div>
+
+  <script>
+    const collapse = (content, isOpen) => {
+      content.style.height = content.scrollHeight + "px";
+
+      if (!isOpen) setTimeout(() => content.style.height = 0);
+
+      content.addEventListener('transitionend', () => {
+        if (!isOpen) return content.style.height = 0;
+        content.style.height = "auto";
+      });
+    }
+
+    const buttons = document.querySelectorAll(".button");
+    const contents = document.querySelectorAll(".content");
+
+    buttons.forEach((button, index) => {
+      let isOpen = false;
+
+      button.addEventListener("click", () => {
+        isOpen = !isOpen;
+        collapse(contents[index], isOpen);
+      });
+    });
+  </script>
+</body>
+</html>
